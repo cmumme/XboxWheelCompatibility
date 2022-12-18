@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupProject", "SetupProject\SetupProject.vdproj", "{9DBB7A26-9F87-41E0-AF44-260889D44DEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XboxWheelCompatibility", "XboxWheelCompatibilityLibrary\XboxWheelCompatibility.csproj", "{9435CC88-3E58-4556-9A1F-C2C37413E72D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DBB7A26-9F87-41E0-AF44-260889D44DEE}.Debug|Any CPU.ActiveCfg = Debug
+		{9DBB7A26-9F87-41E0-AF44-260889D44DEE}.Debug|Any CPU.Build.0 = Debug
+		{9DBB7A26-9F87-41E0-AF44-260889D44DEE}.Release|Any CPU.ActiveCfg = Release
+		{9DBB7A26-9F87-41E0-AF44-260889D44DEE}.Release|Any CPU.Build.0 = Release
+		{9435CC88-3E58-4556-9A1F-C2C37413E72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9435CC88-3E58-4556-9A1F-C2C37413E72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9435CC88-3E58-4556-9A1F-C2C37413E72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9435CC88-3E58-4556-9A1F-C2C37413E72D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B7B71DB-B71F-4E4B-BC37-2E33D8037438}
+	EndGlobalSection
+EndGlobal
