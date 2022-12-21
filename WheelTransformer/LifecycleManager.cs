@@ -23,6 +23,7 @@ namespace XboxWheelCompatibility.WheelTransformer
             while (!CancellationSource.IsCancellationRequested)
             {
                 Step();
+                Thread.Sleep(1);
             }
         }
 
