@@ -46,7 +46,11 @@ namespace XboxWheelCompatibility.WheelTransformer
 
         public static void Initialize()
         {
-            Injector.InitializeGamepadInjection();
+            /*
+                This caused issues on some users devices, it would occasionally just say Access is denied when initializing gamepad injection.
+                As it turns out, you can actually inject gamepad input without initializing gamepad injection.
+            */
+            // Injector.InitializeGamepadInjection();
 
             LifecycleManager.Tick += (object? Sender, EventArgs Event) =>
             {
@@ -63,7 +67,7 @@ namespace XboxWheelCompatibility.WheelTransformer
 
         public static void Destroy()
         {
-            Injector.UninitializeGamepadInjection();
+            // Injector.UninitializeGamepadInjection();
         }
     }
 }
