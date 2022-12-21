@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Xbox Wheel Compatibility" Language="1033" Version="1.0.0.0" Manufacturer="Camren Mumme" UpgradeCode="91093d1e-eacb-43e4-a770-616b67dd3bc0">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+		
+
+		<Feature Id="ProductFeature" Title="Xbox Wheel Compatibility" Level="1">
+			<ComponentGroupRef Id="ServiceInstallerComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="XboxWheelCompatibility" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ServiceInstallerComponents" Directory="INSTALLFOLDER">
+			<Component Guid="8EC43A1C-5470-479D-99D9-DED22373DBFA" >
+				<File Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelCompatibilityService.exe" KeyPath="yes" />
+				<ServiceInstall Id="ServiceInstaller"
+								  Type="ownProcess"
+								  Name="WheelCompatibilityService"
+								  DisplayName="Wheel Compatibility Service"
+								  Description="Enables the usage of traditionally Xbox exclusive racing wheels on Windows 10/11."
+								  Start="auto"
+								  ErrorControl="normal"
+								  Account="LocalSystem"/>
+				<ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="WheelCompatibilityService" Wait="yes" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
