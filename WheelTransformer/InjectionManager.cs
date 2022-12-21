@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Gaming.Input;
 using Windows.UI.Input.Preview.Injection;
 
-namespace XboxWheelCompatibilityLibrary
+namespace XboxWheelCompatibility.WheelTransformer
 {
     public class InjectionManager
     {
@@ -46,8 +46,6 @@ namespace XboxWheelCompatibilityLibrary
 
         public static void Initialize()
         {
-            Console.WriteLine("Starting injection manager");
-
             Injector.InitializeGamepadInjection();
 
             LifecycleManager.Tick += (object? Sender, EventArgs Event) =>
@@ -57,12 +55,7 @@ namespace XboxWheelCompatibilityLibrary
                     WheelManager.UpdateWheels();
                 }
 
-                if (WheelManager.MainWheel == null)
-                {
-                    Console.WriteLine($"no main wheel. active wheels: {WheelManager.ActiveWheels.Count} inactive wheels: {RacingWheel.RacingWheels.Count} rawgamecontrollers detected: {RawGameController.RawGameControllers.Count}");
-
-                    return;
-                };
+                if (WheelManager.MainWheel == null) return;
 
                 InjectCurrentReading();
             };

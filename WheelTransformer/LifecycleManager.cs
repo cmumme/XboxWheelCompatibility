@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XboxWheelCompatibilityLibrary
+namespace XboxWheelCompatibility.WheelTransformer
 {
     internal class LifecycleManager
     {
         public static EventHandler<EventArgs>? Tick;
         public static bool Started { get; private set; } = false;
+
+        private static CancellationTokenSource CancellationSource = new();
 
         public static void Step()
         {
@@ -18,7 +20,7 @@ namespace XboxWheelCompatibilityLibrary
 
         private static void Loop()
         {
-            while (Started)
+            while (!CancellationSource.IsCancellationRequested)
             {
                 Step();
             }
@@ -26,21 +28,18 @@ namespace XboxWheelCompatibilityLibrary
 
         public static void Start()
         {
-            if (Started) return;
+            if (CancellationSource.IsCancellationRequested) return;
 
-            Console.WriteLine("Starting lifecycle manager");
+            Task.Run(Loop, CancellationSource.Token);
 
             Started = true;
-            Task.Run(Loop);
         }
 
         public static void Stop()
         {
-            if (!Started) return;
+            if (!CancellationSource.IsCancellationRequested) return;
 
-            Console.WriteLine("Stopping lifecycle manager");
-
-            Started = false;
+            CancellationSource.Cancel();
         }
     }
 }

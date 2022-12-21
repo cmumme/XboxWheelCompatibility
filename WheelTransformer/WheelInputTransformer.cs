@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace XboxWheelCompatibilityLibrary
+namespace XboxWheelCompatibility.WheelTransformer
 {
-    public class Program
+    public class WheelInputTransformer
     {
-        public static void Main(string[] _)
+        public static void Start()
         {
-
             LifecycleManager.Start();
 
             WheelManager.Initialize();
             InjectionManager.Initialize();
-
-            Console.ReadLine();
         }
 
-        public static void Stop(object Sender, EventArgs Event)
+        public static void Stop()
         {
             LifecycleManager.Stop();
             InjectionManager.Destroy();

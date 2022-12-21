@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Gaming.Input;
 
-namespace XboxWheelCompatibilityLibrary
+namespace XboxWheelCompatibility.WheelTransformer
 {
     public class WheelManager
     {
@@ -16,7 +16,6 @@ namespace XboxWheelCompatibilityLibrary
 
         public static void UpdateWheels()
         {
-            Console.WriteLine("Updating wheel list");
             lock (WheelListLock)
             {
 
@@ -36,8 +35,6 @@ namespace XboxWheelCompatibilityLibrary
 
                 MainWheel = ActiveWheels.Count > 0 ? ActiveWheels.Last() : null;
 
-                if(MainWheel != null) Console.WriteLine("Ready!");
-
                 if (MainWheelChanged == null) return;
                 MainWheelChanged.Invoke(null, MainWheel);
             }
@@ -56,8 +53,6 @@ namespace XboxWheelCompatibilityLibrary
 
         public static void Initialize()
         {
-
-            Console.WriteLine("Starting wheel manager");
             ListenForWheelChanges();
         }
     }
