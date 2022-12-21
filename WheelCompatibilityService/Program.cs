@@ -1,23 +1,29 @@
 using System.Diagnostics;
-using XboxWheelCompatibility.WheelCompatibilityService;
 
 
-try
+namespace XboxWheelCompatibility.WheelCompatibilityService
 {
-    EventLog.WriteEntry(".NET Runtime", "Starting the Wheel Compatibility Service", EventLogEntryType.Information, 1000);
-
-    IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    class Program
     {
-        services.AddHostedService<WheelCompatibilityWorker>();
-    })
-    .UseWindowsService()
-    .Build();
+        public static void Main(string[] Arguments)
+        {
 
-    host.Run();
-
-}
-catch (Exception ex)
-{
-    EventLog.WriteEntry(".NET Runtime", ex.ToString(), EventLogEntryType.Error, 1000);
+            try
+            {
+                Host.CreateDefaultBuilder(Arguments)
+                    .UseWindowsService()
+                    .ConfigureServices(Services =>
+                        {
+                            Services.AddHostedService<WheelCompatibilityWorker>();
+                        }
+                    )
+                    .Build()
+                    .Run();
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(".NET Runtime", ex.ToString(), EventLogEntryType.Error, 1000);
+            }
+        }
+    }
 }
