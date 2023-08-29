@@ -1,0 +1,59 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal" xmlns:netfx="http://wixtoolset.org/schemas/v4/wxs/netfx">
+	<?define NetCorePlatform = x86?>
+	<?define NetCoreIdVersion = 6012?>
+	<?define NetCoreVersion = 6.0.12?>
+	<?define NetCoreSdkFeatureBandVersion = 60400?>
+	<?define NetCoreSdkIdVersion = 60403?>
+	<?define NetCoreSdkVersion = 6.0.403?>
+	<?include NetCore6_Platform.wxi?>
+
+	<?define AspNetCoreRedistLink = https://download.visualstudio.microsoft.com/download/pr/8f583028-b802-4661-b8dd-47139b0561ce/3c0cd3bdc6051759ccae40f78982c86e/aspnetcore-runtime-6.0.9-win-x86.exe?>
+	<?define DesktopNetCoreRedistLink = https://download.visualstudio.microsoft.com/download/pr/ba2ece7b-686a-4bda-b7d7-8cc3b8964d66/8eee13e44d90345d40c1b262c78aad6a/windowsdesktop-runtime-6.0.12-win-x64.exe?>
+	<?define DotNetCoreRedistLink = https://download.visualstudio.microsoft.com/download/pr/6020f3fc-5cf8-4e25-bc7f-dcf8744137ac/4cb5ced4e015e426fddc554b130c3052/dotnet-runtime-6.0.9-win-x86.exe?>
+	<?define DotNetCoreSdkRedistLink = https://download.visualstudio.microsoft.com/download/pr/c2bf9927-2746-4126-b839-1080b360f348/17191138699683165a20fde56571f433/dotnet-sdk-6.0.403-win-x86.exe?>
+
+	<Bundle
+		UpgradeCode="3193315D-FB6F-4020-89E8-238AD2F6834F"
+		Name="Xbox Wheel Compatibility"
+		Manufacturer="Camren Mumme"
+		Version="1.2.0"
+	>
+		<BootstrapperApplication>
+			<bal:WixStandardBootstrapperApplication
+                LicenseUrl="https://raw.githubusercontent.com/cmumme/XboxWheelCompatibility/stable/LICENSE"
+                Theme="hyperlinkLargeLicense"
+				LogoFile="icon.png"
+				ShowVersion="yes"
+			/>
+		</BootstrapperApplication>
+
+		<Chain>
+			<PackageGroupRef Id="PrereqPackages" />
+			<MsiPackage Id="WheelCompatibilitySetup" SourceFile="WheelCompatibilitySetup.msi" />
+		</Chain>
+	</Bundle>
+
+	<Fragment>
+		<!-- .NET 6.0.12 (x86) -->
+		<netfx:DotNetCoreSearch Id="$(var.DesktopNetCoreId)" RuntimeType="desktop" Platform="$(var.NetCorePlatform)" MajorVersion="6" Variable="$(var.DesktopNetCoreId)" />
+
+		<WixVariable Id="DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)DetectCondition" Value="$(var.DesktopNetCoreId)" Overridable="yes" />
+		<WixVariable Id="DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)InstallCondition" Value="" Overridable="yes" />
+		<WixVariable Id="DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)PackageDirectory" Value="redist\" Overridable="yes" />
+		<WixVariable Id="DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)RepairArguments" Value="" Overridable="yes" />
+
+		<PackageGroup Id="PrereqPackages">
+			<ExePackage InstallArguments="$(var.DesktopNetCoreRedistInstallArguments)" PerMachine="yes" DetectCondition="!(wix.DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)DetectCondition)" InstallCondition="!(wix.DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)InstallCondition)" Id="$(var.DesktopNetCoreRedistId)" Vital="yes" Permanent="yes" Protocol="burn" LogPathVariable="$(var.DesktopNetCoreRedistLog)" Cache="remove">
+				<ExePackagePayload
+					Name="!(wix.DesktopNetCoreRuntime$(var.NetCoreIdVersion)Redist$(var.NetCorePlatform)PackageDirectory)windowsdesktop-runtime-$(var.NetCoreVersion)-win-$(var.NetCorePlatform).exe"
+					DownloadUrl="$(var.DesktopNetCoreRedistLink)"
+					ProductName="Microsoft Windows Desktop Runtime - 6.0.12 (x86)"
+					Description="Microsoft Windows Desktop Runtime - 6.0.12 (x86)"
+					Hash="7A827ACFB4C982B05734DB73A1E46F8F50536BC34E9B57ABFF46E5B907ADF5DCF67331764CBE17BA17A1BF9DCCE598F7C88605BF3DBED7111AD5A1EF1BCAD42E"
+					Size="52021912"
+					Version="6.0.9.31928"
+				/>
+			</ExePackage>
+		</PackageGroup>
+	</Fragment>
+</Wix>
