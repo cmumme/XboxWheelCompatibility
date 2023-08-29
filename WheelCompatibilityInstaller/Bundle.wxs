@@ -13,10 +13,10 @@
 	<?define DotNetCoreSdkRedistLink = https://download.visualstudio.microsoft.com/download/pr/c2bf9927-2746-4126-b839-1080b360f348/17191138699683165a20fde56571f433/dotnet-sdk-6.0.403-win-x86.exe?>
 
 	<Bundle
-		UpgradeCode="3193315D-FB6F-4020-89E8-238AD2F6834F"
+		UpgradeCode="6070FEFC-B26D-47F2-B80D-32EA2DA933BA"
 		Name="Xbox Wheel Compatibility"
 		Manufacturer="Camren Mumme"
-		Version="1.2.0"
+		Version="1.2.1"
 	>
 		<BootstrapperApplication>
 			<bal:WixStandardBootstrapperApplication
