@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Xbox Wheel Compatibility" Language="1033" Version="1.2.0" Manufacturer="Camren Mumme" UpgradeCode="91093d1e-eacb-43e4-a770-616b67dd3bc0">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:netfx="http://wixtoolset.org/schemas/v4/wxs/netfx" xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal">
+	<Package Name="Xbox Wheel Compatibility" Language="1033" Version="1.2.1" Manufacturer="Camren Mumme" UpgradeCode="6070FEFC-B26D-47F2-B80D-32EA2DA933BA" InstallerVersion="200">
+		
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 		
@@ -12,61 +10,48 @@
 			<ComponentGroupRef Id="ConfiguratorComponents" />
 			<ComponentRef Id="ApplicationShortcut" />
 		</Feature>
-	</Product>
+	</Package>
 
 	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="XboxWheelCompatibility">
-					<Directory Id="SERVICEINSTALLFOLDER" Name="Service" />
-				</Directory>
+		<StandardDirectory Id="ProgramFilesFolder">
+			<Directory Id="INSTALLFOLDER" Name="XboxWheelCompatibility">
+				<Directory Id="SERVICEINSTALLFOLDER" Name="Service" />
 			</Directory>
-			<Directory Id="ProgramMenuFolder">
-				<Directory Id="ApplicationProgramsFolder" Name="Xbox Wheel Compatibility"/>
-			</Directory>
-		</Directory>
+		</StandardDirectory>
+		<StandardDirectory Id="ProgramMenuFolder">
+			<Directory Id="ApplicationProgramsFolder" Name="Xbox Wheel Compatibility" />
+		</StandardDirectory>
 	</Fragment>
 
 	<Fragment>
-		<DirectoryRef Id="ProgramMenuFolder">
+		<StandardDirectory Id="ProgramMenuFolder">
 			<Component Id="ApplicationShortcut" Guid="72900F31-82E2-4F7D-A261-D31AB35D6DEE">
-				<Shortcut Id="ApplicationStartMenuShortcut"
-						  Name="Xbox Wheel Compatibility"
-						  Description="Xbox Wheel Compatibility"
-						  Target="[#WheelCompatibilityConfigurator.exe]"
-						  WorkingDirectory="INSTALLFOLDER"/>
-				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
-				<RegistryValue Root="HKCU" Key="Software\CamrenMumme\XboxWheelCompatibility" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+				<Shortcut Id="ApplicationStartMenuShortcut" Name="Xbox Wheel Compatibility" Description="Xbox Wheel Compatibility" Target="[#WheelCompatibilityConfigurator.exe]" WorkingDirectory="INSTALLFOLDER" />
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
+				<RegistryValue Root="HKCU" Key="Software\CamrenMumme\XboxWheelCompatibility" Name="installed" Type="integer" Value="1" KeyPath="yes" />
 			</Component>
-		</DirectoryRef>
+		</StandardDirectory>
 	</Fragment>
 
 	<Fragment>
 		<ComponentGroup Id="ConfiguratorComponents" Directory="INSTALLFOLDER">
-			<Component Guid="D2A9C617-48B5-4329-BA42-18C85C0A787F" >
-				<File Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\WheelCompatibilityConfigurator.exe" KeyPath="yes" />
+			<Component Guid="D2A9C617-48B5-4329-BA42-18C85C0A787F">
+				<File Id="WheelCompatibilityConfigurator.exe" Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\WheelCompatibilityConfigurator.exe" KeyPath="yes" />
 			</Component>
 			<Component Id="ConfiguratorDebugFiles" Guid="497EDD46-B998-4D31-BC4C-003593C848E9">
-				<File Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\CommunicationInterface.pdb" />
-				<File Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\WheelCompatibilityConfigurator.pdb" />
+				<File Id="CommunicationInterface.pdb" Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\CommunicationInterface.pdb" />
+				<File Id="WheelCompatibilityConfigurator.pdb" Source="$(var.WheelCompatibilityConfigurator.TargetDir)..\publish\WheelCompatibilityConfigurator.pdb" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
 
 	<Fragment>
 		<ComponentGroup Id="ServiceInstallerComponents" Directory="SERVICEINSTALLFOLDER">
-			<Component Guid="8EC43A1C-5470-479D-99D9-DED22373DBFA" >
-				<File Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelCompatibilityService.exe" KeyPath="yes" />
-				<File Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelCompatibilityService.pdb" />
-				<File Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelTransformer.pdb" />
-				<ServiceInstall Id="ServiceInstaller"
-								  Type="ownProcess"
-								  Name="WheelCompatibilityService"
-								  DisplayName="Wheel Compatibility Service"
-								  Description="Enables the usage of traditionally Xbox exclusive racing wheels on Windows 10/11."
-								  Start="auto"
-								  ErrorControl="normal"
-								  Account="LocalSystem"/>
+			<Component Guid="8EC43A1C-5470-479D-99D9-DED22373DBFA">
+				<File Id="WheelCompatibilityService.exe" Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelCompatibilityService.exe" KeyPath="yes" />
+				<File Id="WheelCompatibilityService.pdb" Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelCompatibilityService.pdb" />
+				<File Id="WheelTransformer.pdb" Source="$(var.WheelCompatibilityService.TargetDir)..\publish\WheelTransformer.pdb" />
+				<ServiceInstall Id="ServiceInstaller" Type="ownProcess" Name="WheelCompatibilityService" DisplayName="Wheel Compatibility Service" Description="Enables the usage of traditionally Xbox exclusive racing wheels on Windows 10/11." Start="auto" ErrorControl="normal" Account="LocalSystem" />
 				<ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="WheelCompatibilityService" Wait="yes" />
 			</Component>
 		</ComponentGroup>

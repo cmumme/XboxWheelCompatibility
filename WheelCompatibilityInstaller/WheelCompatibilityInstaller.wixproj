@@ -1,0 +1,16 @@
+﻿<Project Sdk="WixToolset.Sdk/4.0.0-rc.1">
+  <PropertyGroup>
+    <OutputType>Bundle</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="icon.png" />
+    <Content Include="NetCore6_Platform.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Bal.wixext" />
+    <PackageReference Include="WixToolset.Netfx.wixext" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WheelCompatibilitySetup\WheelCompatibilitySetup.wixproj" />
+  </ItemGroup>
+</Project>
