@@ -8,6 +8,18 @@ using Windows.UI.Input.Preview.Injection;
 
 namespace XboxWheelCompatibility.WheelTransformer
 {
+    public enum InjectorType {
+        // This is what works for most games. The game will see it as an Xbox One controller,
+        // with your throttle and brake mapped to the respective trigger. Steering is mapped to
+        // the right thumbstick, gear up/down is mapped to the bumpers, and other buttons are
+        // mapped respectively.
+        VirtualController,
+        // Use this if the VirtualController injector isn't working with your system.
+        // This requires vJoy setup on the system, and instead of mapping the wheel
+        // to an Xbox One controller, it maps it to a vJoy joystick.
+        vJoy
+    }
+
     public class InjectionManager
     {
         private static readonly InputInjector Injector = InputInjector.TryCreate();
